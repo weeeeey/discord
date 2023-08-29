@@ -1,7 +1,13 @@
 import React from 'react';
 
-const ServerIdPage = () => {
-    return <div>ServerIdPage</div>;
+interface ServerIdPageProps {
+    params: {
+        serverId: string;
+    };
+}
+const ServerIdPage = ({ params }: ServerIdPageProps) => {
+    const { serverId } = params;
+    return <div>{serverId}</div>;
 };
 
 export default ServerIdPage;
