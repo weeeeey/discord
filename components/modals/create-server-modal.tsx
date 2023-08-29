@@ -29,14 +29,18 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { FileUpload } from '../file-upload';
+import { useModal } from '@/hooks/use-modal-store';
 
 const formSchema = z.object({
     imageUrl: z.string().min(2),
     name: z.string().min(2).max(50),
 });
 
-function InitialModal() {
+function CreateServerModal() {
     const [isMount, setisMount] = useState(false);
+    const { isOpen, type, onClose } = useModal();
+    const isModalOpen = isOpen && type == 'createServer';
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -46,6 +50,7 @@ function InitialModal() {
     });
     const isLoading = form.formState.isSubmitting;
     const router = useRouter();
+
     useEffect(() => {
         setisMount(true);
     }, []);
@@ -55,28 +60,25 @@ function InitialModal() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            await axios.post('/api/servers', {
+            const res = await axios.post('/api/servers', {
                 name: values.name,
                 imageUrl: values.imageUrl,
             });
-            form.reset();
             toast.success('Created Server');
-            router.refresh();
-            window.location.reload();
+            router.push(`/servers/${res.data.id}`);
         } catch (error) {
             toast.error('Something went wrong');
+        } finally {
+            onClose();
         }
     }
 
     return (
-        <Dialog open>
-            <DialogContent className="flex w-full p-0  ">
-                <div className="w-0 sm:w-1/3 h-auto relative">
-                    <Image src="/bg.jpg" fill alt="bg" />
-                </div>
+        <Dialog open={isModalOpen} onOpenChange={onClose}>
+            <DialogContent className="flex flex-col w-full p-0  ">
                 <div className="py-8 px-6">
                     <DialogHeader className="flex flex-col space-y-4 mb-4">
-                        <DialogTitle>내 첫 Discord 서버 만들기</DialogTitle>
+                        <DialogTitle>서버 만들기</DialogTitle>
                         <DialogDescription>
                             서버는 나와 친구들이 함께 어울리는 공간입니다. 내
                             서버를 만들고 대화를 시작해보세요.
@@ -132,4 +134,4 @@ function InitialModal() {
     );
 }
 
-export default InitialModal;
+export default CreateServerModal;

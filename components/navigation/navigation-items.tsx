@@ -1,20 +1,19 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
-interface NavigationItemsProps {
-    title?: string;
+interface NavigationItemProps {
+    imageUrl: string;
+    name: string;
 }
-
-const NavigationItems = ({ title }: NavigationItemsProps) => {
+const NavigationItem = ({ imageUrl, name }: NavigationItemProps) => {
     return (
-        <Avatar className="w-12 h-12">
-            <AvatarImage
-                src={title ? '/cute.webp' : '/placeholder.jpg'}
-                alt="avatar"
-            />
-            <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <>
+            <Avatar className="w-12 h-12">
+                <AvatarImage src={imageUrl} alt={name} />
+                <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+        </>
     );
 };
 
-export default NavigationItems;
+export default NavigationItem;

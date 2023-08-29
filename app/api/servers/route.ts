@@ -3,6 +3,7 @@ import { client } from '@/lib/prismadb';
 import { NextResponse } from 'next/server';
 import { nanoid } from 'nanoid';
 import ObjectID from 'bson-objectid';
+import { MemberRole } from '@prisma/client';
 
 export async function POST(req: Request) {
     try {
@@ -15,12 +16,29 @@ export async function POST(req: Request) {
 
         const code = nanoid(12);
         const inviteCode = ObjectID(code).toHexString();
+
         const newServer = await client.server.create({
             data: {
                 profileId: currentUser.id,
                 name,
                 imageUrl,
                 inviteCode,
+                members: {
+                    create: [
+                        {
+                            profileId: currentUser.id,
+                            role: MemberRole.ADMIN,
+                        },
+                    ],
+                },
+                channels: {
+                    create: [
+                        {
+                            name: 'general',
+                            profileId: currentUser.id,
+                        },
+                    ],
+                },
             },
         });
         return NextResponse.json(newServer);
