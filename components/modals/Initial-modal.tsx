@@ -1,4 +1,11 @@
 'use client';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { toast } from 'react-hot-toast';
+
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -18,25 +25,18 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-import axios from 'axios';
-
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Image from 'next/image';
-import { toast } from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+
+import { FileUpload } from '../file-upload';
 
 const formSchema = z.object({
-    imageUrl: z.string().min(2).max(50),
+    imageUrl: z.string().min(2),
     name: z.string().min(2).max(50),
 });
 
 function InitialModal() {
     const [isMount, setisMount] = useState(false);
-    const [isopen, setIsopen] = useState(true);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -44,6 +44,7 @@ function InitialModal() {
             name: '',
         },
     });
+    const isLoading = form.formState.isSubmitting;
     const router = useRouter();
     useEffect(() => {
         setisMount(true);
@@ -58,24 +59,23 @@ function InitialModal() {
                 name: values.name,
                 imageUrl: values.imageUrl,
             });
+            form.reset();
             toast.success('Created Server');
-            setIsopen(false);
-            router.push(`/servers/${res.data.id}`);
+            router.refresh();
+            window.location.reload();
         } catch (error) {
             toast.error('Something went wrong');
-        } finally {
-            setIsopen(false);
         }
     }
 
     return (
-        <Dialog open={false}>
-            <DialogContent className=" flex w-full p-0">
-                <div className="w-1/2 h-auto relative">
-                    <Image src="/placeholder.jpg" fill alt="bg" />
+        <Dialog open>
+            <DialogContent className="flex w-full p-0  ">
+                <div className="w-0 sm:w-1/3 h-auto relative">
+                    <Image src="/bg.jpg" fill alt="bg" />
                 </div>
-                <div className="p-6">
-                    <DialogHeader className="flex flex-col space-y-4 mb-8">
+                <div className="py-8 px-6">
+                    <DialogHeader className="flex flex-col space-y-4 mb-4">
                         <DialogTitle>내 첫 Discord 서버 만들기</DialogTitle>
                         <DialogDescription>
                             서버는 나와 친구들이 함께 어울리는 공간입니다. 내
@@ -85,7 +85,7 @@ function InitialModal() {
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(onSubmit)}
-                            className="space-y-8"
+                            className="space-y-6"
                         >
                             <FormField
                                 control={form.control}
@@ -105,15 +105,24 @@ function InitialModal() {
                                 name="imageUrl"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Image</FormLabel>
+                                        <FormLabel>Server image</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <div className="flex justify-center items-center">
+                                                <FileUpload
+                                                    endpoint="serverImage"
+                                                    value={field.value}
+                                                    onChange={field.onChange}
+                                                />
+                                            </div>
                                         </FormControl>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
                             <DialogFooter>
-                                <Button type="submit">Save changes</Button>
+                                <Button disabled={isLoading} type="submit">
+                                    Create
+                                </Button>
                             </DialogFooter>
                         </form>
                     </Form>
