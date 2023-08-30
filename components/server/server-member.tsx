@@ -1,5 +1,5 @@
 'use client';
-import { Profile } from '@prisma/client';
+import { Member, Profile } from '@prisma/client';
 import React, { useState } from 'react';
 import {
     Sheet,
@@ -14,7 +14,9 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface ServerMemberProps {
-    members: Profile[];
+    members: (Member & {
+        profile: Profile;
+    })[];
 }
 
 const ServerMember = ({ members }: ServerMemberProps) => {
@@ -47,13 +49,13 @@ const ServerMember = ({ members }: ServerMemberProps) => {
                                 <div className="w-8 h-8 relative">
                                     <Image
                                         alt="memberImage"
-                                        src={member.imageUrl}
+                                        src={member.profile.imageUrl}
                                         fill
                                         className="rounded-full "
                                     />
                                 </div>
                                 <div className="text-lg text-neutral-300 ">
-                                    {member.name}
+                                    {member.profile.name}
                                 </div>
                             </div>
                         ))}

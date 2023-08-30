@@ -7,33 +7,44 @@ import currentProfile from '@/lib/current-profile';
 import { redirect } from 'next/navigation';
 import { client } from '@/lib/prismadb';
 
-const ServerHeader = async () => {
+interface ServerHeaderProps {
+    serverId: string;
+    channelId: string;
+}
+
+const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
     const currentUser = await currentProfile();
     if (!currentUser) {
         redirect('/');
     }
-    const res = await client.server.findFirst({
+
+    const members = await client.member.findMany({
         where: {
-            profileId: currentUser.id,
+            serverId,
         },
-        select: {
-            name: true,
-            members: {
-                include: {
-                    profile: true,
-                },
-            },
+        include: {
+            profile: true,
         },
     });
-    if (!res) {
-        redirect('/');
+    const chammel = await client.channel.findFirst({
+        where: {
+            id: channelId,
+
+            serverId,
+        },
+    });
+    if (!chammel) {
+        return (
+            <div className="w-full h-full flex justify-center items-center">
+                채널을 추가해보세요!
+            </div>
+        );
     }
-    const members = res?.members.map((member) => member.profile) || [];
     return (
         <div className="flex flex-wrap justify-between items-center p-0">
-            <div className="font-semibold px-4 py-3 flex space-x-2 ">
+            <div className="font-semibold px-4 pt-2 flex items-center space-x-2 h-8 ">
                 <Hash className="text-slate-400" />
-                <div>{res.name}</div>
+                <div className="pb-1">{chammel.name}</div>
             </div>
             <div className="flex space-x-3 pr-4 py-3">
                 <Bell className="h-6 w-6 cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />

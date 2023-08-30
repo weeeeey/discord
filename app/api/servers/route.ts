@@ -2,7 +2,6 @@ import currentProfile from '@/lib/current-profile';
 import { client } from '@/lib/prismadb';
 import { NextResponse } from 'next/server';
 import { nanoid } from 'nanoid';
-import ObjectID from 'bson-objectid';
 import { MemberRole } from '@prisma/client';
 
 export async function POST(req: Request) {
@@ -14,8 +13,7 @@ export async function POST(req: Request) {
         const body = await req.json();
         const { name, imageUrl } = body;
 
-        const code = nanoid(12);
-        const inviteCode = ObjectID(code).toHexString();
+        const inviteCode = nanoid(12);
 
         const newServer = await client.server.create({
             data: {

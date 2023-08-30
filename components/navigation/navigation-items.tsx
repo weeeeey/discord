@@ -9,13 +9,19 @@ interface NavigationItemProps {
     imageUrl: string;
     name: string;
     value: string;
+    channelId: string;
 }
-const NavigationItem = ({ imageUrl, name, value }: NavigationItemProps) => {
+const NavigationItem = ({
+    imageUrl,
+    name,
+    value,
+    channelId,
+}: NavigationItemProps) => {
     const router = useRouter();
     const params = useParams();
 
     const handleClick = () => {
-        router.push(`/servers/${value}`);
+        router.push(`/servers/${value}/channels/${channelId}`);
     };
     return (
         <button

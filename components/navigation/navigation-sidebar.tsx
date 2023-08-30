@@ -23,7 +23,15 @@ const NavigationSidebar = async () => {
                 },
             },
         },
+        include: {
+            channels: {
+                select: {
+                    id: true,
+                },
+            },
+        },
     });
+
     if (!servers) {
         redirect('/');
     }
@@ -35,12 +43,13 @@ const NavigationSidebar = async () => {
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <Separator />
-                {servers.map((server: Server) => (
+                {servers.map((server) => (
                     <NavigationItem
                         key={server.id}
                         value={server.id}
                         imageUrl={server.imageUrl}
                         name={server.name}
+                        channelId={server.channels[0].id}
                     />
                 ))}
                 <NavigationAction />
