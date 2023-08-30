@@ -23,11 +23,7 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             serverId,
         },
         include: {
-            server: {
-                select: {
-                    name: true,
-                },
-            },
+            server: true,
         },
     });
 
@@ -47,6 +43,7 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                     key={channel.id}
                     channel={channel}
                     serverId={serverId}
+                    server={channel.server}
                 />
             ))}
         </div>
