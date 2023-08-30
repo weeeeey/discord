@@ -17,9 +17,6 @@ const NavigationAction = () => {
                 >
                     <Plus />
                 </Button>
-                <Button className="h-12 w-12 rounded-full p-2 bg-slate-700 ">
-                    <Compass />
-                </Button>
             </div>
         </>
     );

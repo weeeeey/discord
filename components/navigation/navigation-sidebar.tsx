@@ -38,6 +38,7 @@ const NavigationSidebar = async () => {
                 {servers.map((server: Server) => (
                     <NavigationItem
                         key={server.id}
+                        value={server.id}
                         imageUrl={server.imageUrl}
                         name={server.name}
                     />
