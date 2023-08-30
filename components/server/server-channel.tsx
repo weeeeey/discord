@@ -34,7 +34,13 @@ const ServerChannel = ({ channel, serverId, server }: ServerChannelProps) => {
                     <div className="text-sm ">{channelType}</div>
                 </div>
                 <TooltipProvider description="채널 추가">
-                    <button>
+                    <button
+                        onClick={() => {
+                            onOpen('createChannel', {
+                                channelType: channel.type,
+                            });
+                        }}
+                    >
                         <Plus className="w-4 h-4 mr-4 hover:text-slate-200" />{' '}
                     </button>
                 </TooltipProvider>

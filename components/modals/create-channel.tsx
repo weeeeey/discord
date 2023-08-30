@@ -35,7 +35,7 @@ import { FileUpload } from '../file-upload';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -49,11 +49,12 @@ const CreateChannel = () => {
     const isModalOpen = isOpen && type === 'createChannel';
     const [isMount, setisMount] = useState(false);
     const router = useRouter();
+    const params = useParams();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            type: '',
+            type: data.channelType,
             name: '',
         },
     });
@@ -68,12 +69,13 @@ const CreateChannel = () => {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            await axios.post('/api/servers', {
+            await axios.post('/api/channels', {
                 name: values.name,
                 type: values.type,
+                serverId: params.serverId,
             });
             form.reset();
-            toast.success('Created Server');
+            toast.success('Created Channel');
             router.refresh();
             window.location.reload();
         } catch (error) {
@@ -85,8 +87,10 @@ const CreateChannel = () => {
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="flex flex-col w-full p-0  ">
                 <div className="py-8 px-6">
-                    <DialogHeader className="flex flex-col space-y-4 mb-4">
-                        <DialogTitle>Create Channel</DialogTitle>
+                    <DialogHeader className="flex flex-col space-y-8 mb-4">
+                        <DialogTitle className="text-2xl">
+                            Create Channel
+                        </DialogTitle>
                         <Form {...form}>
                             <form
                                 onSubmit={form.handleSubmit(onSubmit)}
@@ -99,7 +103,10 @@ const CreateChannel = () => {
                                         <FormItem>
                                             <FormLabel>channel name</FormLabel>
                                             <FormControl>
-                                                <Input {...field} />
+                                                <Input
+                                                    {...field}
+                                                    placeholder="write a name"
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -117,7 +124,11 @@ const CreateChannel = () => {
                                             >
                                                 <FormControl>
                                                     <SelectTrigger>
-                                                        <SelectValue placeholder="Select a verified email to display" />
+                                                        <SelectValue
+                                                            placeholder={
+                                                                data.channelType
+                                                            }
+                                                        />
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>

@@ -10,9 +10,18 @@ const SetupPage = async () => {
         where: {
             profileId: profile.id,
         },
+        include: {
+            channels: {
+                select: {
+                    id: true,
+                },
+            },
+        },
     });
     if (server) {
-        return redirect(`/servers/${server.id}`);
+        return redirect(
+            `/servers/${server.id}/channels/${server.channels[0].id}`
+        );
     }
     return <InitialModal />;
 };
