@@ -13,7 +13,7 @@ const TooltipProvider = ({
     description?: string;
 }) => {
     return (
-        <TP>
+        <TP delayDuration={200}>
             <Tooltip>
                 <TooltipTrigger asChild>{children}</TooltipTrigger>
                 <TooltipContent>

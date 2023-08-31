@@ -8,6 +8,7 @@ export async function POST(req: Request) {
         const currentP = await currentProfile();
         const body = await req.json();
         const { type, name, serverId } = body;
+
         if (!currentP.id) {
             return new NextResponse('unauthorized user', { status: 401 });
         }

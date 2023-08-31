@@ -41,7 +41,7 @@ const NavigationItem = ({
             />
             <Avatar className="w-12 h-12">
                 <AvatarImage src={imageUrl} alt={name} />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>{name}</AvatarFallback>
             </Avatar>
         </button>
     );

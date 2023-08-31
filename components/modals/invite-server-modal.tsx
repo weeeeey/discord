@@ -1,10 +1,6 @@
 'use client';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-hot-toast';
 
-import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -20,7 +16,6 @@ function InviteServerModal() {
     const [isMount, setisMount] = useState(false);
     const { isOpen, type, data, onClose } = useModal();
     const isModalOpen = isOpen && type == 'invite';
-    const router = useRouter();
 
     useEffect(() => {
         setisMount(true);

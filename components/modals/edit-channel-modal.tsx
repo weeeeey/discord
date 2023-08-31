@@ -35,23 +35,24 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useParams, useRouter } from 'next/navigation';
+import { Trash } from 'lucide-react';
 
-const CreateChannel = () => {
+const EditChannelModal = () => {
     const { isOpen, onClose, data, type } = useModal();
-    const isModalOpen = isOpen && type === 'createChannel';
+    const isModalOpen = isOpen && type === 'editChannel';
     const [isMount, setisMount] = useState(false);
     const router = useRouter();
     const params = useParams();
 
     const formSchema = z.object({
         name: z.string().min(2).max(50),
-        type: z.string().default(data.channelType!),
+        type: z.string().default(data.channel?.type!),
     });
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            type: data.channelType,
+            type: data.channel?.type,
             name: '',
         },
     });
@@ -66,13 +67,29 @@ const CreateChannel = () => {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            await axios.post('/api/channels', {
+            await axios.patch(`/api/channels/${data.channel?.id}`, {
                 name: values.name,
                 type: values.type,
                 serverId: params.serverId,
             });
             form.reset();
-            toast.success('Created Channel');
+            toast.success('updated channel');
+            router.refresh();
+            window.location.reload();
+        } catch (error) {
+            toast.error('Something went wrong');
+        }
+    }
+
+    async function onDelete() {
+        try {
+            await axios.delete(`/api/channels/${data.channel?.id}`, {
+                data: {
+                    serverId: params.serverId,
+                },
+            });
+            form.reset();
+            toast.success('deleted channel');
             router.refresh();
             window.location.reload();
         } catch (error) {
@@ -83,10 +100,10 @@ const CreateChannel = () => {
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="flex flex-col w-full p-0  ">
-                <div className="py-8 px-6">
+                <div className="py-8 px-6 relative">
                     <DialogHeader className="flex flex-col space-y-8 mb-4">
                         <DialogTitle className="text-2xl">
-                            Create Channel
+                            edit channel
                         </DialogTitle>
                         <Form {...form}>
                             <form
@@ -126,7 +143,8 @@ const CreateChannel = () => {
                                                                 field.value
                                                             }
                                                             placeholder={
-                                                                data.channelType
+                                                                data.channel
+                                                                    ?.type
                                                             }
                                                         />
                                                     </SelectTrigger>
@@ -155,6 +173,12 @@ const CreateChannel = () => {
                                 </DialogFooter>
                             </form>
                         </Form>
+                        <Button
+                            onClick={onDelete}
+                            className="absolute bottom-[13%] left-[5%] text-black bg-white "
+                        >
+                            <Trash className="w-4 h-4" />
+                        </Button>
                     </DialogHeader>
                 </div>
             </DialogContent>
@@ -162,4 +186,4 @@ const CreateChannel = () => {
     );
 };
 
-export default CreateChannel;
+export default EditChannelModal;
