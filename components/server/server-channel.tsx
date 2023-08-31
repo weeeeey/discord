@@ -20,7 +20,7 @@ const ServerChannel = ({ channel, server, admin }: ServerChannelProps) => {
     };
 
     return (
-        <div className="p-0 mt-1">
+        <div className="p-0 mt-1 group ">
             <div
                 className={cn(
                     'flex flex-col mx-2 rounded-md transition-all cursor-pointer',
@@ -43,7 +43,12 @@ const ServerChannel = ({ channel, server, admin }: ServerChannelProps) => {
                             {channel.name}
                         </div>
                     </div>
-                    <div className=" flex text-slate-400 space-x-1">
+                    <div
+                        className={cn(
+                            ' text-slate-400 space-x-1 hidden group-hover:flex ',
+                            channel.id === params.channelId && 'flex'
+                        )}
+                    >
                         <TooltipProvider description="초대 코드 만들기">
                             <button
                                 className="hover:text-slate-200"

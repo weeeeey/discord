@@ -18,33 +18,34 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
         redirect('/');
     }
 
-    const members = await client.member.findMany({
+    const server = await client.server.findUnique({
         where: {
-            serverId,
+            id: serverId,
         },
         include: {
-            profile: true,
+            members: {
+                where: {
+                    NOT: {
+                        profileId: currentUser.id,
+                    },
+                },
+                include: {
+                    profile: true,
+                },
+            },
+            channels: {
+                where: {
+                    id: channelId,
+                },
+            },
         },
     });
-    const chammel = await client.channel.findFirst({
-        where: {
-            id: channelId,
-
-            serverId,
-        },
-    });
-    if (!chammel) {
-        return (
-            <div className="w-full h-full flex justify-center items-center">
-                채널을 추가해보세요!
-            </div>
-        );
-    }
+    const members = server?.members;
     return (
         <div className="flex flex-wrap justify-between items-center p-0">
             <div className="font-semibold px-4 pt-2 flex items-center space-x-2 h-8 ">
                 <Hash className="text-slate-400" />
-                <div className="pb-1">{chammel.name}</div>
+                <div className="pb-1">{server?.channels[0].name}</div>
             </div>
             <div className="flex space-x-3 pr-4 py-3">
                 <Bell className="h-6 w-6 cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />

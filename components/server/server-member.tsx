@@ -14,9 +14,11 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface ServerMemberProps {
-    members: (Member & {
-        profile: Profile;
-    })[];
+    members:
+        | (Member & {
+              profile: Profile;
+          })[]
+        | undefined;
 }
 
 const ServerMember = ({ members }: ServerMemberProps) => {
@@ -41,7 +43,7 @@ const ServerMember = ({ members }: ServerMemberProps) => {
                         Members
                     </SheetTitle>
                     <SheetDescription>
-                        {members.map((member) => (
+                        {members?.map((member) => (
                             <div
                                 key={member.id}
                                 className="flex justify-center items-center space-x-4 w-full"

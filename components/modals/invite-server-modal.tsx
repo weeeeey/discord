@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/dialog';
 
 import { useModal } from '@/hooks/use-modal-store';
+import { Input } from '../ui/input';
+import { toast } from 'react-hot-toast';
 
 function InviteServerModal() {
     const [isMount, setisMount] = useState(false);
@@ -24,6 +26,14 @@ function InviteServerModal() {
         return null;
     }
 
+    const copyToClipboard = async () => {
+        try {
+            await navigator.clipboard.writeText(data.server?.inviteCode!);
+            toast.success('초대 코드 복사');
+        } catch (error) {
+            toast.error('something went wrong');
+        }
+    };
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="flex flex-col w-full p-0  ">
@@ -38,6 +48,15 @@ function InviteServerModal() {
                         </DialogDescription>
                     </DialogHeader>
                 </div>
+                <DialogFooter className="w-full relative p-3">
+                    <Input disabled value={data.server?.inviteCode} />
+                    <button
+                        onClick={copyToClipboard}
+                        className="absolute bottom-5 right-5 bg-blue-400 hover:bg-blue-500 px-5 rounded-lg"
+                    >
+                        복사
+                    </button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     );
