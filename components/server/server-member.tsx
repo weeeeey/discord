@@ -64,9 +64,11 @@ const ServerMember = ({ members }: ServerMemberProps) => {
                                             <div className="text-sm text-slate-400 group-hover:text-slate-200 ">
                                                 {member.profile.name}
                                             </div>
-                                            <TooltipProvider description="서버 주인">
-                                                <Crown className=" w-4 h-4 fill-yellow-500 text-yellow-500" />
-                                            </TooltipProvider>
+                                            {member.role === 'ADMIN' && (
+                                                <TooltipProvider description="서버 주인">
+                                                    <Crown className=" w-4 h-4 fill-yellow-500 text-yellow-500" />
+                                                </TooltipProvider>
+                                            )}
                                         </div>
                                     </PopoverTrigger>
                                     <PopoverContent

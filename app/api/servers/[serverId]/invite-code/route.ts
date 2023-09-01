@@ -27,6 +27,7 @@ export async function PATCH(
                 },
             },
         });
+
         return NextResponse.json(updatedServer);
     } catch (error) {
         console.log('INVITE_ERROR', error);

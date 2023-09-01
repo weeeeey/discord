@@ -4,6 +4,7 @@ import CreateServerModal from '../modals/create-server-modal';
 import InviteServerModal from '../modals/invite-server-modal';
 import CreateChannel from '../modals/create-channel';
 import EditChannelModal from '../modals/edit-channel-modal';
+import MobileMenu from '../modals/mobile-menu';
 
 const ModalProvider = () => {
     const [isMounted, setisMounted] = useState(false);
@@ -16,6 +17,7 @@ const ModalProvider = () => {
 
     return (
         <div>
+            <MobileMenu />
             <EditChannelModal />
             <CreateChannel />
             <CreateServerModal />

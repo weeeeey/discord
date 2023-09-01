@@ -1,3 +1,4 @@
+import { currentUser } from '@clerk/nextjs';
 import React from 'react';
 
 interface ServerIdPageProps {
@@ -7,6 +8,7 @@ interface ServerIdPageProps {
 }
 const ServerIdPage = ({ params }: ServerIdPageProps) => {
     const { serverId } = params;
+
     return <div>{serverId}</div>;
 };
 
