@@ -24,11 +24,6 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
         },
         include: {
             members: {
-                where: {
-                    NOT: {
-                        profileId: currentUser.id,
-                    },
-                },
                 include: {
                     profile: true,
                 },
@@ -47,12 +42,12 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
                 <Hash className="text-slate-400" />
                 <div className="pb-1">{server?.channels[0].name}</div>
             </div>
-            <div className="flex space-x-3 pr-4 py-3">
-                <Bell className="h-6 w-6 cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
-                <Pin className="h-6 w-6  cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
+            <div className="flex items-center space-x-3 pr-4 py-3">
+                <Bell className="h-4 w-4 cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
+                <Pin className="h-4 w-4  cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
                 <ServerMember members={members} />
                 <ServerSearch />
-                <HelpCircle className="h-6 w-6 cursor-pointer text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
+                <HelpCircle className="h-4 w-4 cursor-pointer text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
             </div>
             <Separator className="bg-black" />
         </div>
