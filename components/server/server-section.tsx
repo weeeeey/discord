@@ -51,6 +51,7 @@ const ServerSection = ({
             {channels?.map((channel) => (
                 <ServerChannel
                     key={channel.id}
+                    channelType={channelType}
                     channel={channel}
                     server={server}
                     admin={admin}

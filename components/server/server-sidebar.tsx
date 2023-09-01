@@ -59,7 +59,7 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
 
     return (
         <div className="flex flex-col space-y-4 w-full h-full">
-            <div className="flex justify-between items-center px-2 pt-4 h-8">
+            <div className="flex justify-between items-center px-2 pt-4 h-9">
                 <div className=" font-semibold text-slate-200 text-xl">
                     {channels[0].server.name}
                 </div>

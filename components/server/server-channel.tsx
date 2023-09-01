@@ -1,7 +1,17 @@
 'use client';
 import { Channel, Server } from '@prisma/client';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { ChevronRight, Hash, Plus, Settings, UserPlus2 } from 'lucide-react';
+import {
+    ChevronRight,
+    Hash,
+    Plus,
+    Settings,
+    Text,
+    UserPlus2,
+    Video,
+    Volume1,
+    Volume2,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useModal } from '@/hooks/use-modal-store';
 import TooltipProvider from '../providers/tooltip-provider';
@@ -10,13 +20,25 @@ interface ServerChannelProps {
     channel: Channel;
     server: Server;
     admin: boolean;
+    channelType: 'TEXT' | 'VIDEO' | 'AUDIO';
 }
-const ServerChannel = ({ channel, server, admin }: ServerChannelProps) => {
+
+const ServerChannel = ({
+    channel,
+    server,
+    admin,
+    channelType,
+}: ServerChannelProps) => {
     const router = useRouter();
     const params = useParams();
     const { onOpen } = useModal();
     const handleClick = () => {
         router.push(`/servers/${server.id}/channels/${channel.id}`);
+    };
+    const Icon = {
+        TEXT: <Hash className="w-4 h-4 text-slate-400" />,
+        AUDIO: <Volume2 className="w-4 h-4 text-slate-400" />,
+        VIDEO: <Video className="w-4 h-4 text-slate-400" />,
     };
 
     return (
@@ -31,8 +53,8 @@ const ServerChannel = ({ channel, server, admin }: ServerChannelProps) => {
                 onClick={handleClick}
             >
                 <div className="flex items-center justify-between font-semibold px-2 py-1">
-                    <div className="flex items-center justify-center space-x-2">
-                        <Hash className="w-4 h-4 text-slate-400" />
+                    <div className="flex items-center  space-x-2">
+                        <div>{Icon[channelType]}</div>
                         <div
                             className={cn(
                                 'text-sm text-slate-400',

@@ -38,9 +38,9 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
     const members = server?.members;
     return (
         <div className="flex flex-wrap justify-between items-center p-0">
-            <div className="font-semibold px-4 pt-2 flex items-center space-x-2 h-8 ">
+            <div className="font-semibold  py-3 pl-3  flex items-center space-x-2 h-8 ">
                 <Hash className="text-slate-400" />
-                <div className="pb-1">{server?.channels[0].name}</div>
+                <div>{server?.channels[0].name}</div>
             </div>
             <div className="flex items-center space-x-3 pr-4 py-3">
                 <Bell className="h-4 w-4 cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />

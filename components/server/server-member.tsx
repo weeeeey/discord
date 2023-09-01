@@ -41,16 +41,16 @@ const ServerMember = ({ members }: ServerMemberProps) => {
                     />
                 </button>
 
-                <SheetContent className="w-60 flex flex-col mt-[53px] p-4">
+                <SheetContent className="w-[260px] flex flex-col mt-[53px] p-4">
                     <SheetHeader className="flex flex-col items-start  ">
                         <SheetTitle className="text-xs text-slate-400 ">
                             Members - {members?.length}
                         </SheetTitle>
-                        <SheetDescription className="w-full relative ">
+                        <SheetDescription className="w-full relative  ">
                             {members?.map((member) => (
                                 <Popover key={member.id}>
                                     <PopoverTrigger asChild>
-                                        <div className="flex justify-start items-center space-x-2 rounded-lg px-2 py-1 w-full group hover:bg-slate-800">
+                                        <div className="flex justify-start items-center space-x-2 rounded-lg px-2 py-1 w-full group hover:bg-slate-800 cursor-pointer">
                                             <div className="w-8 h-8 relative">
                                                 <Image
                                                     alt="memberImage"

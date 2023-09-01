@@ -25,10 +25,11 @@ function InviteServerModal() {
     if (!isMount) {
         return null;
     }
+    const inviteUrl = `${window.location.origin}/invite/${data.server?.inviteCode}`;
 
     const copyToClipboard = async () => {
         try {
-            await navigator.clipboard.writeText(data.server?.inviteCode!);
+            await navigator.clipboard.writeText(inviteUrl);
             toast.success('초대 코드 복사');
         } catch (error) {
             toast.error('something went wrong');
@@ -49,7 +50,7 @@ function InviteServerModal() {
                     </DialogHeader>
                 </div>
                 <DialogFooter className="w-full relative p-3">
-                    <Input disabled value={data.server?.inviteCode} />
+                    <Input disabled value={inviteUrl} />
                     <button
                         onClick={copyToClipboard}
                         className="absolute bottom-5 right-5 bg-blue-400 hover:bg-blue-500 px-5 rounded-lg"
