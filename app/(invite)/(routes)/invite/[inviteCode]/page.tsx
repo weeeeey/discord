@@ -1,12 +1,10 @@
-import { Button } from '@/components/ui/button';
 import currentProfile from '@/lib/current-profile';
 import { client } from '@/lib/prismadb';
-import axios from 'axios';
 import { Circle } from 'lucide-react';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import React from 'react';
-import { toast } from 'react-hot-toast';
+import InviteButton from './components/invite-button';
 
 const InviteCodePage = async ({
     params,
@@ -32,28 +30,20 @@ const InviteCodePage = async ({
             channels: true,
             members: {
                 select: {
-                    id: true,
+                    profileId: true,
                 },
             },
         },
     });
+
     if (!server) {
         return <div>유효하지 않은 서버 코드입니다.</div>;
     }
-
-    const handleClick = async () => {
-        try {
-            const res = await axios.post(
-                `/api/servers/${server.id}/invite-code`,
-                {
-                    serverId: server.id,
-                    profile: currentUser,
-                }
-            );
-        } catch (error) {
-            toast.error('something went wrong');
+    server.members.forEach((member) => {
+        if (member.profileId === currentUser.id) {
+            redirect(`/servers/${server.id}`);
         }
-    };
+    });
 
     return (
         <div className="p-4 flex flex-col space-y-4 justify-center items-center bg-slate-800">
@@ -75,7 +65,7 @@ const InviteCodePage = async ({
                     <div>멤버 {server.members.length}명</div>
                 </div>
             </div>
-            <Button className="w-full hover:bg-slate-400">초대 수락하기</Button>
+            <InviteButton currentUser={currentUser} server={server} />
         </div>
     );
 };
