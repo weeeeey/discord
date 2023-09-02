@@ -26,10 +26,7 @@ const NavigationItem = ({
     return (
         <button
             onClick={handleClick}
-            className={cn(
-                'relative rounded-lg transition-all duration-500 p-0 group',
-                imageUrl ? 'hover:bg-white' : 'bg-blue-600'
-            )}
+            className="relative rounded-lg transition-all duration-500 p-0 group"
         >
             <div
                 className={cn(

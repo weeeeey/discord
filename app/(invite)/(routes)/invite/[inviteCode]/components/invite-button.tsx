@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Profile, Server } from '@prisma/client';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -23,10 +23,11 @@ const InviteButton = ({ currentUser, server }: InviteButtonsProps) => {
                 }
             );
             toast.success('초대에 수락하셨습니다');
-            router.push(`/servers/${res.data.id}}`);
+            router.refresh();
+
             // console.log(res.data.id);
         } catch (error) {
-            toast.error('something went wrong');
+            console.log('something went wrong');
         }
     };
 

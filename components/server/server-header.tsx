@@ -42,7 +42,7 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
     return (
         <div className="flex flex-wrap justify-between items-center p-0">
             <div className="font-semibold  py-3 pl-3  flex items-center space-x-2 h-8 ">
-                <ServerMobile server={server} />
+                <ServerMobile serverId={serverId} />
                 <Hash className="text-slate-400 h-4 w-4" />
                 <div>{server?.channels[0].name}</div>
             </div>
