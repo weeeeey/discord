@@ -49,7 +49,12 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
             <div className="flex items-center space-x-3 pr-4 py-3">
                 <Bell className="h-4 w-4 cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
                 <Pin className="h-4 w-4  cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
-                <ServerMember members={server.members} />
+                <ServerMember
+                    serverId={serverId}
+                    members={server.members}
+                    currentProfile={currentUser}
+                    isAdmin={server.profileId === currentUser.id}
+                />
                 <ServerSearch />
                 <HelpCircle className="h-4 w-4 cursor-pointer text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
             </div>

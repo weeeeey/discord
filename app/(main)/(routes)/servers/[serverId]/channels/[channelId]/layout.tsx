@@ -1,4 +1,5 @@
 import ServerHeader from '@/components/server/server-header';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import React from 'react';
 
 interface ChannelIDLayoutProps {
@@ -13,7 +14,7 @@ const ChannelIDLayout = ({ params, children }: ChannelIDLayoutProps) => {
     return (
         <div>
             <ServerHeader serverId={serverId} channelId={channelId} />
-            {children}
+            <ScrollArea>{children}</ScrollArea>
         </div>
     );
 };

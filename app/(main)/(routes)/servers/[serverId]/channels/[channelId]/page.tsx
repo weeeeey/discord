@@ -24,7 +24,11 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
             id: channelId,
         },
         include: {
-            messages: true,
+            messages: {
+                orderBy: {
+                    createdAt: 'asc',
+                },
+            },
         },
     });
     if (!channel) {
