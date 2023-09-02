@@ -6,12 +6,14 @@ interface ChannelIDLayoutProps {
         serverId: string;
         channelId: string;
     };
+    children: React.ReactNode;
 }
-const ChannelIDLayout = ({ params }: ChannelIDLayoutProps) => {
+const ChannelIDLayout = ({ params, children }: ChannelIDLayoutProps) => {
     const { channelId, serverId } = params;
     return (
         <div>
             <ServerHeader serverId={serverId} channelId={channelId} />
+            {children}
         </div>
     );
 };
