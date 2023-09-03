@@ -26,6 +26,13 @@ export async function PATCH(
                     },
                 },
             },
+            include: {
+                channels: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
         });
 
         return NextResponse.json(updatedServer);

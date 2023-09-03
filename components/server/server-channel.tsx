@@ -46,7 +46,7 @@ const ServerChannel = ({
             <div
                 className={cn(
                     'flex flex-col mx-2 rounded-md transition-all cursor-pointer',
-                    channel.id === params.channelId
+                    channel.id === params?.channelId
                         ? 'bg-slate-800'
                         : 'hover:bg-slate-500'
                 )}
@@ -58,7 +58,7 @@ const ServerChannel = ({
                         <div
                             className={cn(
                                 'text-sm text-slate-400',
-                                channel.id === params.channelId &&
+                                channel.id === params?.channelId &&
                                     'text-slate-200'
                             )}
                         >
@@ -68,7 +68,7 @@ const ServerChannel = ({
                     <div
                         className={cn(
                             ' text-slate-400 space-x-1 hidden group-hover:flex ',
-                            channel.id === params.channelId && 'flex'
+                            channel.id === params?.channelId && 'flex'
                         )}
                     >
                         <TooltipProvider description="초대 코드 만들기">

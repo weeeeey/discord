@@ -9,6 +9,7 @@ import currentProfile from '@/lib/current-profile';
 import { client } from '@/lib/prismadb';
 import { redirect } from 'next/navigation';
 import { Server } from '@prisma/client';
+import { ScrollArea } from '../ui/scroll-area';
 
 const NavigationSidebar = async () => {
     const profile = await currentProfile();

@@ -23,7 +23,9 @@ const InviteButton = ({ currentUser, server }: InviteButtonsProps) => {
                 }
             );
             toast.success('초대에 수락하셨습니다');
-            router.refresh();
+            router.push(
+                `/servers/${res.data.id}/channels/${res.data.channels[0].id}`
+            );
 
             // console.log(res.data.id);
         } catch (error) {

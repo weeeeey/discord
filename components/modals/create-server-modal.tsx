@@ -64,13 +64,16 @@ function CreateServerModal() {
                 name: values.name,
                 imageUrl: values.imageUrl,
             });
+            console.log(res);
             toast.success('Created Server');
-            router.push(`/servers/${res.data.id}`);
+            router.refresh();
+            router.push(
+                `/servers/${res.data.id}/channels/${res.data.channels[0].id}`
+            );
         } catch (error) {
             toast.error('Something went wrong');
         } finally {
             form.reset();
-            router.refresh();
             onClose();
         }
     }

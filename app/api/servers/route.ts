@@ -38,6 +38,13 @@ export async function POST(req: Request) {
                     ],
                 },
             },
+            include: {
+                channels: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
         });
         return NextResponse.json(newServer);
     } catch (error) {

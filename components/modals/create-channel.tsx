@@ -69,7 +69,7 @@ const CreateChannel = () => {
             await axios.post('/api/channels', {
                 name: values.name,
                 type: values.type,
-                serverId: params.serverId,
+                serverId: params?.serverId,
             });
             form.reset();
             toast.success('Created Channel');
