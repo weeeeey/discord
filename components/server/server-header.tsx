@@ -7,6 +7,7 @@ import currentProfile from '@/lib/current-profile';
 import { redirect } from 'next/navigation';
 import { client } from '@/lib/prismadb';
 import ServerMobile from './server-mobile';
+import SocketIndicator from '../ui/socket-indicator';
 
 interface ServerHeaderProps {
     serverId: string;
@@ -47,8 +48,8 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
                 <div>{server?.channels[0].name}</div>
             </div>
             <div className="flex items-center space-x-3 pr-4 py-3">
-                <Bell className="h-4 w-4 cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
-                <Pin className="h-4 w-4  cursor-pointer fill-slate-400 text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
+                <SocketIndicator />
+
                 <ServerMember
                     serverId={serverId}
                     members={server.members}
@@ -56,7 +57,6 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
                     isAdmin={server.profileId === currentUser.id}
                 />
                 <ServerSearch />
-                <HelpCircle className="h-4 w-4 cursor-pointer text-slate-400 hover:fill-slate-200 hover:text-slate-200" />
             </div>
             <Separator className="bg-black" />
         </div>
