@@ -39,7 +39,20 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
     }
     return (
         <div className="flex flex-col h-full justify-between ">
-            <div className=" h-full">Messages</div>
+            {/* <ChatMessages
+                member={member}
+                name={channel.name}
+                chatId={channel.id}
+                type="channel"
+                apiUrl="/api/messages"
+                socketUrl="/api/socket/messages"
+                socketQuery={{
+                    channelId: channel.id,
+                    serverId: channel.serverId,
+                }}
+                paramKey="channelId"
+                paramValue={channel.id}
+            /> */}
             <ChatInput
                 apiUrl="/api/socket/messages"
                 name={channel.name}
@@ -54,18 +67,3 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
 };
 
 export default ChannelPage;
-
-// /* <ChatMessages
-//             member={member}
-//             name={channel.name}
-//             chatId={channel.id}
-//             type="channel"
-//             apiUrl="/api/messages"
-//             socketUrl="/api/socket/messages"
-//             socketQuery={{
-//                 channelId: channel.id,
-//                 serverId: channel.serverId,
-//             }}
-//             paramKey="channelId"
-//             paramValue={channel.id}
-//         />  */
