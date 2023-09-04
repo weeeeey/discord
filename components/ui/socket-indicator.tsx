@@ -3,8 +3,6 @@
 import { useSocket } from '../providers/socket-provider';
 import { Badge } from './badge';
 
-import React, { useState } from 'react';
-
 const SocketIndicator = () => {
     const { isConnected } = useSocket();
     if (!isConnected) {

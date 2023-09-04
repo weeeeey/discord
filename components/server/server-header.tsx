@@ -49,7 +49,6 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
             </div>
             <div className="flex items-center space-x-3 pr-4 py-3">
                 <SocketIndicator />
-
                 <ServerMember
                     serverId={serverId}
                     members={server.members}

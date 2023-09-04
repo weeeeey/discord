@@ -1,4 +1,4 @@
-import ChatInput from '@/components/chat/chat-input';
+import { ChatInput } from '@/components/chat/chat-input';
 import { ChatMessages } from '@/components/chat/chat-messages';
 import currentProfile from '@/lib/current-profile';
 import { client } from '@/lib/prismadb';
@@ -52,8 +52,17 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
                 }}
                 paramKey="channelId"
                 paramValue={channel.id}
+            />  */}
+            <div className="flex-1 h-full">Messages</div>
+            <ChatInput
+                apiUrl="/api/socket/messages"
+                name={channel.name}
+                type="channel"
+                query={{
+                    channelId: channel.id,
+                    serverId: channel.serverId,
+                }}
             />
-            <ChatInput /> */}
         </div>
     );
 };
