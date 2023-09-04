@@ -23,6 +23,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         const socketInstance = new (ClientIO as any)(
+            // 현재는 자동으로 localhost로 연결되지만 나중에 배포 후에는 사이트 지정해줘야함
             process.env.NEXT_PUBLIC_SITE_URL!,
             {
                 path: '/api/socket/io',
