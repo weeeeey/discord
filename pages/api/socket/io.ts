@@ -10,6 +10,7 @@ export const config = {
     },
 };
 // socket.io 연결
+//
 
 const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
     if (!res.socket.server.io) {
