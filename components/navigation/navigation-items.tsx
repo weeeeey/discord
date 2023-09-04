@@ -9,7 +9,7 @@ interface NavigationItemProps {
     imageUrl: string;
     name: string;
     value: string;
-    channelId: string;
+    channelId?: string;
 }
 const NavigationItem = ({
     imageUrl,
@@ -21,7 +21,11 @@ const NavigationItem = ({
     const params = useParams();
 
     const handleClick = () => {
-        router.push(`/servers/${value}/channels/${channelId}`);
+        if (value === 'DM') {
+            router.push(`/conversations`);
+        } else {
+            router.push(`/servers/${value}/channels/${channelId}`);
+        }
     };
     return (
         <button
@@ -31,7 +35,7 @@ const NavigationItem = ({
             <div
                 className={cn(
                     'absolute top-[35%] -left-[35%] bg-white h-1/3 w-2 rounded-lg hidden group-hover:block',
-                    params.serverId === value
+                    params?.serverId === value
                         ? 'block w-2 h-4/5 top-[15%] transition-all'
                         : ''
                 )}

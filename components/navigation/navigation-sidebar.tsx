@@ -1,4 +1,4 @@
-import { UserButton, currentUser } from '@clerk/nextjs';
+import { UserButton } from '@clerk/nextjs';
 import React from 'react';
 import { Separator } from '../ui/separator';
 import NavigationItem from './navigation-items';
@@ -8,8 +8,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import currentProfile from '@/lib/current-profile';
 import { client } from '@/lib/prismadb';
 import { redirect } from 'next/navigation';
-import { Server } from '@prisma/client';
-import { ScrollArea } from '../ui/scroll-area';
 
 const NavigationSidebar = async () => {
     const profile = await currentProfile();
@@ -39,11 +37,8 @@ const NavigationSidebar = async () => {
     return (
         <div className="flex flex-col justify-between items-center p-4 h-full bg-black/70">
             <div className="text-muted-foreground flex flex-col justify-start items-center space-y-2">
-                <Avatar className="w-12 h-12">
-                    <AvatarImage src="/placeholder.jpg" alt="DM" />
-                    <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <Separator />
+                <NavigationItem value="DM" imageUrl="/discord.jpeg" name="DM" />
+                <Separator className="bg-slate-400" />
                 {servers.map((server) => (
                     <NavigationItem
                         key={server.id}

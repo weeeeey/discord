@@ -7,6 +7,7 @@ export type ServerWithMembersWithProfiles = Server & {
     members: (Member & { profile: Profile })[];
 };
 
+// response 타입 설정
 export type NextApiResponseServerIo = NextApiResponse & {
     socket: Socket & {
         server: NetServer & {
@@ -14,3 +15,10 @@ export type NextApiResponseServerIo = NextApiResponse & {
         };
     };
 };
+
+// Server
+// 서버측 구성은 크게 3가지 정도로 나눌 수 있습니다.
+
+// response 타입 설정
+// socket.io 연결
+// route 연결

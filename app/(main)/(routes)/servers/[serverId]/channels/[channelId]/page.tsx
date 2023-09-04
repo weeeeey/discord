@@ -1,7 +1,8 @@
 import ChatInput from '@/components/chat/chat-input';
-import ChatMessages from '@/components/chat/chat-messages';
+import { ChatMessages } from '@/components/chat/chat-messages';
 import currentProfile from '@/lib/current-profile';
 import { client } from '@/lib/prismadb';
+import { redirectToSignIn } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
@@ -15,25 +16,16 @@ interface ChannelPageProps {
 const ChannelPage = async ({ params }: ChannelPageProps) => {
     const { channelId, serverId } = params;
     const currProfile = await currentProfile();
+
     if (!currProfile) {
-        return redirect('/sign-in');
+        return redirectToSignIn();
     }
     const channel = await client.channel.findUnique({
         where: {
             serverId,
             id: channelId,
         },
-        include: {
-            messages: {
-                orderBy: {
-                    createdAt: 'asc',
-                },
-            },
-        },
     });
-    if (!channel) {
-        return redirect('/');
-    }
 
     const member = await client.member.findFirst({
         where: {
@@ -42,10 +34,26 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
         },
     });
 
+    if (!channel || !member) {
+        return redirect('/');
+    }
     return (
-        <div className="w-full h-full relative">
-            <ChatMessages />
-            <ChatInput />
+        <div className="flex flex-col h-full">
+            {/* <ChatMessages
+                member={member}
+                name={channel.name}
+                chatId={channel.id}
+                type="channel"
+                apiUrl="/api/messages"
+                socketUrl="/api/socket/messages"
+                socketQuery={{
+                    channelId: channel.id,
+                    serverId: channel.serverId,
+                }}
+                paramKey="channelId"
+                paramValue={channel.id}
+            />
+            <ChatInput /> */}
         </div>
     );
 };

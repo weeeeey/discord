@@ -1,28 +1,83 @@
-import currentProfile from '@/lib/current-profile';
-import { client } from '@/lib/prismadb';
-import { NextResponse } from 'next/server';
+import { NextApiRequest } from 'next';
 
-export async function POST(req: Request) {
+import { NextApiResponseServerIo } from '@/types';
+
+import { client } from '@/lib/prismadb';
+import { currentProfilePages } from '@/lib/current-profile-pages';
+
+export default async function handler(
+    req: NextApiRequest,
+    res: NextApiResponseServerIo
+) {
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
+
     try {
-        const body = await req.json();
-        const { serverId, channelId, content, fileUrl, memberId } = body;
-        const currProfile = await currentProfile();
-        if (!currProfile) {
-            return new NextResponse('unauthorized User', { status: 401 });
+        const profile = await currentProfilePages(req);
+
+        const { content, fileUrl } = req.body;
+        const { serverId, channelId } = req.query;
+
+        if (!profile) {
+            return res.status(401).json({ error: 'Unauthorized' });
         }
-        if (
-            serverId.length === 0 ||
-            channelId.length === 0 ||
-            content.length === 0
-        ) {
-            return new NextResponse('invalid data', { status: 400 });
+
+        if (!serverId) {
+            return res.status(400).json({ error: 'Server ID missing' });
         }
+
+        if (!channelId) {
+            return res.status(400).json({ error: 'Channel ID missing' });
+        }
+
+        if (!content) {
+            return res.status(400).json({ error: 'Content missing' });
+        }
+
+        const server = await client.server.findFirst({
+            where: {
+                id: serverId as string,
+                members: {
+                    some: {
+                        profileId: profile.id,
+                    },
+                },
+            },
+            include: {
+                members: true,
+            },
+        });
+
+        if (!server) {
+            return res.status(404).json({ message: 'Server not found' });
+        }
+
+        const channel = await client.channel.findFirst({
+            where: {
+                id: channelId as string,
+                serverId: serverId as string,
+            },
+        });
+
+        if (!channel) {
+            return res.status(404).json({ message: 'Channel not found' });
+        }
+
+        const member = server.members.find(
+            (member) => member.profileId === profile.id
+        );
+
+        if (!member) {
+            return res.status(404).json({ message: 'Member not found' });
+        }
+
         const message = await client.message.create({
             data: {
                 content,
                 fileUrl,
-                channelId,
-                memberId,
+                channelId: channelId as string,
+                memberId: member.id,
             },
             include: {
                 member: {
@@ -32,9 +87,14 @@ export async function POST(req: Request) {
                 },
             },
         });
-        return NextResponse.json(message);
+
+        const channelKey = `chat:${channelId}:messages`;
+
+        res?.socket?.server?.io?.emit(channelKey, message);
+
+        return res.status(200).json(message);
     } catch (error) {
-        console.log('MESSAGE_POST_ERROR', error);
-        return new NextResponse('internal error', { status: 500 });
+        console.log('[MESSAGES_POST]', error);
+        return res.status(500).json({ message: 'Internal Error' });
     }
 }
