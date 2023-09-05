@@ -10,6 +10,7 @@ import { useChatSocket } from '@/hooks/use-chat-socket';
 import { useChatScroll } from '@/hooks/use-chat-scroll';
 
 import { ChatWelcome } from './chat-welcom';
+import { ChatItem } from './chat-item';
 
 const DATE_FORMAT = 'd MMM yyyy, HH:mm';
 
@@ -31,12 +32,6 @@ interface ChatMessagesProps {
     type: 'channel' | 'conversation';
 }
 
-// apiUrl="/api/messages"
-// socketUrl="/api/socket/messages"
-// socketQuery={{
-//    channelId: channel.id,
-//    serverId: channel.serverId,
-// }}
 export const ChatMessages = ({
     name,
     member,
@@ -114,7 +109,34 @@ export const ChatMessages = ({
                     )}
                 </div>
             )}
-
+            <div className="flex flex-col-reverse mt-auto">
+                {data?.pages?.map((group, i) => (
+                    <Fragment key={i}>
+                        {group.items.map(
+                            (message: MessageWithMemberWithProfile) => (
+                                <ChatItem
+                                    key={message.id}
+                                    id={message.id}
+                                    currentMember={member}
+                                    member={message.member}
+                                    content={message.content}
+                                    fileUrl={message.fileUrl}
+                                    deleted={message.deleted}
+                                    timestamp={format(
+                                        new Date(message.createdAt),
+                                        DATE_FORMAT
+                                    )}
+                                    isUpdated={
+                                        message.updatedAt !== message.createdAt
+                                    }
+                                    socketUrl={socketUrl}
+                                    socketQuery={socketQuery}
+                                />
+                            )
+                        )}
+                    </Fragment>
+                ))}
+            </div>
             <div ref={bottomRef} />
         </div>
     );

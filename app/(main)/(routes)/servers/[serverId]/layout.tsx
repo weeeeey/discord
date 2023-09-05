@@ -12,11 +12,9 @@ const ServerLayout = ({
     return (
         <div className="h-full">
             <div className="hidden sm:block w-60 h-full z-20 bg-slate-600 inset-y-0 fixed">
-                <ScrollArea>
-                    <ServerSidebar serverId={params.serverId} />
-                </ScrollArea>
+                <ServerSidebar serverId={params.serverId} />
             </div>
-            <div className="sm:pl-60">{children}</div>
+            <main className="sm:pl-60 h-full">{children}</main>
         </div>
     );
 };

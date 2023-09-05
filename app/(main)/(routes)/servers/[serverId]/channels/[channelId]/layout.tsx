@@ -12,7 +12,7 @@ interface ChannelIDLayoutProps {
 const ChannelIDLayout = ({ params, children }: ChannelIDLayoutProps) => {
     const { channelId, serverId } = params;
     return (
-        <div className="min-h-screen">
+        <div className="h-full">
             <ServerHeader serverId={serverId} channelId={channelId} />
             <main className="h-full">{children}</main>
         </div>

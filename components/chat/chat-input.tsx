@@ -62,7 +62,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <div className="relative p-4 pb-6">
+                                <div className="relative p-4 pb-6 bg-slate-700">
                                     <button
                                         type="button"
                                         onClick={() =>
