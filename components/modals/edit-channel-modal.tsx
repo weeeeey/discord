@@ -70,7 +70,7 @@ const EditChannelModal = () => {
             await axios.patch(`/api/channels/${data.channel?.id}`, {
                 name: values.name,
                 type: values.type,
-                serverId: params.serverId,
+                serverId: params?.serverId,
             });
             form.reset();
             toast.success('updated channel');
@@ -85,7 +85,7 @@ const EditChannelModal = () => {
         try {
             await axios.delete(`/api/channels/${data.channel?.id}`, {
                 data: {
-                    serverId: params.serverId,
+                    serverId: params?.serverId,
                 },
             });
             form.reset();
