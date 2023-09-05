@@ -3,7 +3,6 @@ import { Message } from '@prisma/client';
 
 import currentProfile from '@/lib/current-profile';
 import { client } from '@/lib/prismadb';
-
 const MESSAGES_BATCH = 10;
 
 export async function GET(req: Request) {

@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
     const [queryClient] = useState(() => new QueryClient());
-
+    // 재랜더링 시 새로운 쿼리 클라이언트 생성 방지
     return (
         <QueryClientProvider client={queryClient}>
             {children}
