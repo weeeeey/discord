@@ -50,6 +50,7 @@ export const ChatMessages = ({
     const chatRef = useRef<ElementRef<'div'>>(null);
     const bottomRef = useRef<ElementRef<'div'>>(null);
 
+    //메시지 담아오기
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
         useChatQuery({
             queryKey,
@@ -71,7 +72,7 @@ export const ChatMessages = ({
             <div className="flex flex-col flex-1 justify-center items-center">
                 <Loader2 className="h-7 w-7 text-zinc-500 animate-spin my-4" />
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                    Loading messages...
+                    Loading messages..
                 </p>
             </div>
         );
