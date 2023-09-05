@@ -29,7 +29,7 @@ export const useChatQuery = ({
             },
             { skipNull: true }
         );
-
+        // fetch시 Id들 body에 담아 보내기 vs   query에 담아 params으로 보내기 차이
         const res = await fetch(url);
         return res.json();
     };
