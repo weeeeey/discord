@@ -38,7 +38,7 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
         return redirect('/');
     }
     return (
-        <div className="flex flex-col h-full  ">
+        <div className="flex flex-col h-full w-full ">
             <ChatMessages
                 member={member}
                 name={channel.name}

@@ -66,7 +66,7 @@ export const ChatItem = ({
             return;
         }
 
-        router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+        router.push(`/conversations/${member.id}`);
     };
 
     useEffect(() => {
@@ -123,8 +123,8 @@ export const ChatItem = ({
     const isImage = !isPDF && fileUrl;
 
     return (
-        <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
-            <div className="group flex gap-x-2 items-start w-full">
+        <div className="relative group  items-center hover:bg-black/5 p-4 transition w-full">
+            <div className={cn('group flex gap-x-2 items-start w-full')}>
                 <div
                     onClick={onMemberClick}
                     className="cursor-pointer hover:drop-shadow-md transition"

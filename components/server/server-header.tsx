@@ -41,7 +41,7 @@ const ServerHeader = async ({ serverId, channelId }: ServerHeaderProps) => {
         redirect('/');
     }
     return (
-        <div className="flex flex-wrap justify-between items-center p-0">
+        <div className="absolute w-full flex flex-wrap justify-between items-center p-0 z-50 bg-slate-700 top-0 left-0">
             <div className="font-semibold  py-3 pl-3  flex items-center space-x-2 h-8 ">
                 <ServerMobile serverId={serverId} />
                 <Hash className="text-slate-400 h-4 w-4" />
