@@ -39,7 +39,7 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
     }
     return (
         <div className="flex flex-col h-full justify-between ">
-            {/* <ChatMessages
+            <ChatMessages
                 member={member}
                 name={channel.name}
                 chatId={channel.id}
@@ -52,7 +52,7 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
                 }}
                 paramKey="channelId"
                 paramValue={channel.id}
-            /> */}
+            />
             <ChatInput
                 apiUrl="/api/socket/messages"
                 name={channel.name}

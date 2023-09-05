@@ -31,6 +31,12 @@ interface ChatMessagesProps {
     type: 'channel' | 'conversation';
 }
 
+// apiUrl="/api/messages"
+// socketUrl="/api/socket/messages"
+// socketQuery={{
+//    channelId: channel.id,
+//    serverId: channel.serverId,
+// }}
 export const ChatMessages = ({
     name,
     member,
