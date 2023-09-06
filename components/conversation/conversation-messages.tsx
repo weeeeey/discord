@@ -111,7 +111,6 @@ export const ConversationMessages = ({
                             (directMessage: DirectMessageWithProfile) => (
                                 <ConversationItem
                                     key={directMessage.id}
-                                    id={directMessage.id}
                                     profile={profile}
                                     content={directMessage.content}
                                     fileUrl={directMessage.fileUrl}
@@ -124,8 +123,6 @@ export const ConversationMessages = ({
                                         directMessage.updatedAt !==
                                         directMessage.createdAt
                                     }
-                                    socketUrl={socketUrl}
-                                    socketQuery={socketQuery}
                                 />
                             )
                         )}

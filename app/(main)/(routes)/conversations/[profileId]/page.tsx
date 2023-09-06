@@ -1,5 +1,4 @@
 import { ChatInput } from '@/components/chat/chat-input';
-import { ChatMessages } from '@/components/chat/chat-messages';
 import { ConversationMessages } from '@/components/conversation/conversation-messages';
 import { getOrCreateConversation } from '@/lib/conversation';
 import currentProfile from '@/lib/current-profile';
@@ -50,6 +49,12 @@ const MemberIdPage = async ({ params }: { params: { profileId: string } }) => {
                 socketQuery={{
                     conversationId: conversation.id,
                 }}
+            />
+            <ChatInput
+                apiUrl="/api/socket/direct-messages"
+                name={theOtherProfile.name}
+                type="conversation"
+                query={{ conversationId: conversation.id }}
             />
         </div>
     );

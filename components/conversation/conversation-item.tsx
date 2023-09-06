@@ -1,34 +1,21 @@
 'use client';
 
 import * as z from 'zod';
-import axios from 'axios';
-import qs from 'query-string';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Member, MemberRole, Profile } from '@prisma/client';
-import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react';
+import { FileIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
 
 import { UserAvatar } from '@/components/user-avatar';
-import { ActionTooltip } from '@/components/action-tooltip';
 import { cn } from '@/lib/utils';
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { useModal } from '@/hooks/use-modal-store';
+import { Profile } from '@prisma/client';
 
 interface ConversationItemProps {
-    id: string;
     content: string;
     profile: Profile;
     timestamp: string;
     fileUrl: string | null;
     deleted: boolean;
     isUpdated: boolean;
-    socketUrl: string;
-    socketQuery: Record<string, string>;
 }
 
 const formSchema = z.object({
@@ -36,15 +23,12 @@ const formSchema = z.object({
 });
 
 export const ConversationItem = ({
-    id,
     content,
     profile,
     timestamp,
     fileUrl,
     deleted,
     isUpdated,
-    socketUrl,
-    socketQuery,
 }: ConversationItemProps) => {
     const [isEditing, setIsEditing] = useState(false);
 
@@ -59,37 +43,6 @@ export const ConversationItem = ({
 
         return () => window.removeEventListener('keyDown', handleKeyDown);
     }, []);
-
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            content: content,
-        },
-    });
-
-    const isLoading = form.formState.isSubmitting;
-
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        try {
-            const url = qs.stringifyUrl({
-                url: `${socketUrl}/${id}`,
-                query: socketQuery,
-            });
-
-            await axios.patch(url, values);
-
-            form.reset();
-            setIsEditing(false);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    useEffect(() => {
-        form.reset({
-            content: content,
-        });
-    }, [content]);
 
     const fileType = fileUrl?.split('.').pop();
 
@@ -156,39 +109,6 @@ export const ConversationItem = ({
                                 </span>
                             )}
                         </p>
-                    )}
-                    {!fileUrl && isEditing && (
-                        <Form {...form}>
-                            <form
-                                className="flex items-center w-full gap-x-2 pt-2"
-                                onSubmit={form.handleSubmit(onSubmit)}
-                            >
-                                <FormField
-                                    control={form.control}
-                                    name="content"
-                                    render={({ field }) => (
-                                        <FormItem className="flex-1">
-                                            <FormControl>
-                                                <div className="relative w-full">
-                                                    <Input
-                                                        disabled={isLoading}
-                                                        className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
-                                                        placeholder="Edited message"
-                                                        {...field}
-                                                    />
-                                                </div>
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                                <Button disabled={isLoading} size="sm">
-                                    Save
-                                </Button>
-                            </form>
-                            <span className="text-[10px] mt-1 text-zinc-400">
-                                Press escape to cancel, enter to save
-                            </span>
-                        </Form>
                     )}
                 </div>
             </div>
