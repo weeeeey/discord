@@ -1,6 +1,5 @@
 'use client';
 
-import * as z from 'zod';
 import { FileIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -17,10 +16,6 @@ interface ConversationItemProps {
     deleted: boolean;
     isUpdated: boolean;
 }
-
-const formSchema = z.object({
-    content: z.string().min(1),
-});
 
 export const ConversationItem = ({
     content,

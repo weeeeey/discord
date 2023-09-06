@@ -3,18 +3,17 @@
 import { Profile } from '@prisma/client';
 import Image from 'next/image';
 import { Separator } from '../ui/separator';
-import { redirect, useRouter } from 'next/navigation';
+import { redirect, useParams, useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 interface ConversationSidebarProps {
-    myProfile: Profile;
     otherProfiles: Profile[];
 }
 
-const ConversationSidebar = ({
-    myProfile,
-    otherProfiles,
-}: ConversationSidebarProps) => {
+const ConversationSidebar = ({ otherProfiles }: ConversationSidebarProps) => {
     const router = useRouter();
+    const params = useParams();
+    const paramsProfileId = params?.profileId;
     return (
         <div className="flex flex-col space-y-4 w-full h-full">
             <div className="flex justify-between items-center px-2 pt-4 h-9">
@@ -28,7 +27,10 @@ const ConversationSidebar = ({
                 {otherProfiles.map((profile: Profile) => (
                     <button
                         key={profile.id}
-                        className="flex space-x-2 text-slate-400 hover:text-slate-200 px-2 py-2 rounded-lg hover:bg-slate-800"
+                        className={cn(
+                            'flex space-x-2 text-slate-400 hover:text-slate-200 px-2 py-2 rounded-lg hover:bg-slate-800',
+                            paramsProfileId === profile.id && 'bg-slate-800'
+                        )}
                         onClick={() => {
                             router.push(`/conversations/${profile.id}`);
                         }}

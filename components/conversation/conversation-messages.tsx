@@ -22,8 +22,6 @@ interface ConversationMessagesProps {
     profile: Profile;
     chatId: string;
     apiUrl: string;
-    socketUrl: string;
-    socketQuery: Record<string, string>;
     paramKey: 'channelId' | 'conversationId';
     paramValue: string;
     type: 'channel' | 'conversation';
@@ -34,8 +32,6 @@ export const ConversationMessages = ({
     profile,
     chatId,
     apiUrl,
-    socketUrl,
-    socketQuery,
     paramKey,
     paramValue,
     type,
