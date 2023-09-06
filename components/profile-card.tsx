@@ -6,6 +6,9 @@ import React from 'react';
 import { format } from 'date-fns';
 import { Separator } from './ui/separator';
 import { Input } from './ui/input';
+import { ChatInput } from './chat/chat-input';
+import { Button } from './ui/button';
+import { useRouter } from 'next/navigation';
 
 interface ProfileCardProps {
     member: Member & {
@@ -17,7 +20,7 @@ interface ProfileCardProps {
 const ProfileCard = ({ member, myProfile }: ProfileCardProps) => {
     const signUpDate = format(member.profile.createdAt, 'yyyy년 M월 d일');
     const enterDate = format(member.createdAt, 'yyyy년 M월 d일');
-
+    const router = useRouter();
     return (
         <div className="bg-slate-800 relative text-slate-300 rounded-lg">
             <div className="h-14 bg-slate-500 rounded-t-lg" />
@@ -46,10 +49,16 @@ const ProfileCard = ({ member, myProfile }: ProfileCardProps) => {
                     <div>역할:</div>
                     <div className="lowercase pb-4"> {member.role}</div>
                     {!myProfile && (
-                        <Input
-                            placeholder={`${member.profile.name} 님에게 메시지 보내기`}
-                            className="w-full rounded-md"
-                        />
+                        <Button
+                            onClick={() => {
+                                router.push(
+                                    `/conversations/${member.profileId}`
+                                );
+                            }}
+                            className="w-full "
+                        >
+                            Send a message
+                        </Button>
                     )}
                 </div>
             </main>

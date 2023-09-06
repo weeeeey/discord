@@ -1,6 +1,4 @@
-import { ChatInput } from '@/components/chat/chat-input';
 import ConversationChat from '@/components/conversation/conversation-chat';
-import { ConversationMessages } from '@/components/conversation/conversation-messages';
 import { getOrCreateConversation } from '@/lib/conversation';
 import currentProfile from '@/lib/current-profile';
 import { client } from '@/lib/prismadb';
