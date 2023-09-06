@@ -1,4 +1,5 @@
 import { ChatInput } from '@/components/chat/chat-input';
+import ConversationChat from '@/components/conversation/conversation-chat';
 import { ConversationMessages } from '@/components/conversation/conversation-messages';
 import { getOrCreateConversation } from '@/lib/conversation';
 import currentProfile from '@/lib/current-profile';
@@ -37,20 +38,16 @@ const MemberIdPage = async ({ params }: { params: { profileId: string } }) => {
 
     return (
         <div className="flex flex-col h-full w-full">
-            <ConversationMessages
-                apiUrl="/api/direct-messages"
+            <ConversationChat
+                apiUrlInput="/api/socket/direct-messages"
+                apiUrlMessage="/api/direct-messages"
                 chatId={conversation.id}
+                myProfile={myProfile}
                 name={theOtherProfile.name}
                 paramKey="conversationId"
                 paramValue={conversation.id}
-                profile={theOtherProfile}
-                type="conversation"
-            />
-            <ChatInput
-                apiUrl="/api/socket/direct-messages"
-                name={theOtherProfile.name}
-                type="conversation"
                 query={{ conversationId: conversation.id }}
+                type="conversation"
             />
         </div>
     );

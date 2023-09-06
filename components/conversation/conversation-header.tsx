@@ -3,6 +3,7 @@ import { Compass } from 'lucide-react';
 import React from 'react';
 import SocketIndicator from '../ui/socket-indicator';
 import { Separator } from '../ui/separator';
+import { ConversationVideoButton } from './conversation-video-button';
 
 interface ConversationHeaderProps {
     otherProfileId: string;
@@ -27,6 +28,7 @@ const ConversationHeader = async ({
                 <div>{otherProfile.name}</div>
             </div>
             <div className="flex items-center space-x-3 pr-4 py-3">
+                <ConversationVideoButton />
                 <SocketIndicator />
             </div>
             <Separator className="bg-black" />

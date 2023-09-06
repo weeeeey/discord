@@ -11,6 +11,7 @@ import { Profile } from '@prisma/client';
 interface ConversationItemProps {
     content: string;
     profile: Profile;
+    myProfile: Profile;
     timestamp: string;
     fileUrl: string | null;
     deleted: boolean;

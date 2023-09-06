@@ -19,7 +19,7 @@ const ProfileIdLayout = ({
     return (
         <div className="h-full w-full relative">
             <ConversationHeader otherProfileId={profileId} />
-            <main className="h-full pt-16">{children}</main>
+            <main className="h-full pt-20">{children}</main>
         </div>
     );
 };

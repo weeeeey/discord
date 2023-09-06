@@ -19,7 +19,7 @@ type DirectMessageWithProfile = DirectMessage & {
 
 interface ConversationMessagesProps {
     name: string;
-    profile: Profile;
+    myProfile: Profile;
     chatId: string;
     apiUrl: string;
     paramKey: 'channelId' | 'conversationId';
@@ -29,7 +29,7 @@ interface ConversationMessagesProps {
 
 export const ConversationMessages = ({
     name,
-    profile,
+    myProfile,
     chatId,
     apiUrl,
     paramKey,
@@ -107,7 +107,8 @@ export const ConversationMessages = ({
                             (directMessage: DirectMessageWithProfile) => (
                                 <ConversationItem
                                     key={directMessage.id}
-                                    profile={profile}
+                                    myProfile={myProfile}
+                                    profile={directMessage.profile}
                                     content={directMessage.content}
                                     fileUrl={directMessage.fileUrl}
                                     deleted={directMessage.deleted}

@@ -6,7 +6,7 @@ import { Video, VideoOff } from 'lucide-react';
 
 import { ActionTooltip } from '@/components/action-tooltip';
 
-export const ChatVideoButton = () => {
+export const ConversationVideoButton = () => {
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
