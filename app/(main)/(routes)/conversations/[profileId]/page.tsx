@@ -1,3 +1,6 @@
+import { ChatInput } from '@/components/chat/chat-input';
+import { ChatMessages } from '@/components/chat/chat-messages';
+import { ConversationMessages } from '@/components/conversation/conversation-messages';
 import { getOrCreateConversation } from '@/lib/conversation';
 import currentProfile from '@/lib/current-profile';
 import { client } from '@/lib/prismadb';
@@ -30,10 +33,26 @@ const MemberIdPage = async ({ params }: { params: { profileId: string } }) => {
     }
     const { profileOne, profileTwo } = conversation;
     // receive member 명시
-    const theOtherMember =
+    const theOtherProfile =
         profileOne.id === myProfile.id ? profileTwo : profileOne;
 
-    return <div>{theOtherMember.name}</div>;
+    return (
+        <div className="flex flex-col h-full w-full">
+            <ConversationMessages
+                apiUrl="/api/direct-messages"
+                chatId={conversation.id}
+                name={theOtherProfile.name}
+                paramKey="conversationId"
+                paramValue={conversation.id}
+                profile={theOtherProfile}
+                type="conversation"
+                socketUrl="/api/socket/direct-messages"
+                socketQuery={{
+                    conversationId: conversation.id,
+                }}
+            />
+        </div>
+    );
 };
 
 export default MemberIdPage;

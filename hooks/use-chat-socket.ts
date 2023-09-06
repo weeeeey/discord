@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { Member, Message, Profile } from '@prisma/client';
+import { DirectMessage, Member, Message, Profile } from '@prisma/client';
 
 import { useSocket } from '@/components/providers/socket-provider';
 
@@ -15,6 +15,9 @@ type MessageWithMemberWithProfile = Message & {
         profile: Profile;
     };
 };
+type DirectMessageWithProfile = DirectMessage & {
+    profile: Profile;
+};
 
 export const useChatSocket = ({
     addKey,
@@ -28,59 +31,131 @@ export const useChatSocket = ({
         if (!socket) {
             return;
         }
+        if (updateKey.includes('direct')) {
+            socket.on(updateKey, (directMessage: DirectMessageWithProfile) => {
+                queryClient.setQueryData([queryKey], (oldData: any) => {
+                    if (
+                        !oldData ||
+                        !oldData.pages ||
+                        oldData.pages.length === 0
+                    ) {
+                        return oldData;
+                    }
 
-        socket.on(updateKey, (message: MessageWithMemberWithProfile) => {
-            queryClient.setQueryData([queryKey], (oldData: any) => {
-                if (!oldData || !oldData.pages || oldData.pages.length === 0) {
-                    return oldData;
-                }
-
-                const newData = oldData.pages.map((page: any) => {
-                    return {
-                        ...page,
-                        items: page.items.map(
-                            (item: MessageWithMemberWithProfile) => {
-                                if (item.id === message.id) {
-                                    return message;
+                    const newData = oldData.pages.map((page: any) => {
+                        return {
+                            ...page,
+                            items: page.items.map(
+                                (item: DirectMessageWithProfile) => {
+                                    if (item.id === directMessage.id) {
+                                        return directMessage;
+                                    }
+                                    return item;
                                 }
-                                return item;
-                            }
-                        ),
+                            ),
+                        };
+                    });
+
+                    return {
+                        ...oldData,
+                        pages: newData,
                     };
                 });
-
-                return {
-                    ...oldData,
-                    pages: newData,
-                };
             });
-        });
+        } else {
+            socket.on(updateKey, (message: MessageWithMemberWithProfile) => {
+                queryClient.setQueryData([queryKey], (oldData: any) => {
+                    if (
+                        !oldData ||
+                        !oldData.pages ||
+                        oldData.pages.length === 0
+                    ) {
+                        return oldData;
+                    }
 
-        socket.on(addKey, (message: MessageWithMemberWithProfile) => {
-            queryClient.setQueryData([queryKey], (oldData: any) => {
-                if (!oldData || !oldData.pages || oldData.pages.length === 0) {
+                    const newData = oldData.pages.map((page: any) => {
+                        return {
+                            ...page,
+                            items: page.items.map(
+                                (item: MessageWithMemberWithProfile) => {
+                                    if (item.id === message.id) {
+                                        return message;
+                                    }
+                                    return item;
+                                }
+                            ),
+                        };
+                    });
+
                     return {
-                        pages: [
-                            {
-                                items: [message],
-                            },
-                        ],
+                        ...oldData,
+                        pages: newData,
                     };
-                }
-
-                const newData = [...oldData.pages];
-
-                newData[0] = {
-                    ...newData[0],
-                    items: [message, ...newData[0].items],
-                };
-
-                return {
-                    ...oldData,
-                    pages: newData,
-                };
+                });
             });
-        });
+        }
+
+        if (addKey.includes('direct')) {
+            socket.on(addKey, (directMessage: DirectMessageWithProfile) => {
+                queryClient.setQueryData([queryKey], (oldData: any) => {
+                    if (
+                        !oldData ||
+                        !oldData.pages ||
+                        oldData.pages.length === 0
+                    ) {
+                        return {
+                            pages: [
+                                {
+                                    items: [directMessage],
+                                },
+                            ],
+                        };
+                    }
+
+                    const newData = [...oldData.pages];
+
+                    newData[0] = {
+                        ...newData[0],
+                        items: [directMessage, ...newData[0].items],
+                    };
+
+                    return {
+                        ...oldData,
+                        pages: newData,
+                    };
+                });
+            });
+        } else {
+            socket.on(addKey, (message: MessageWithMemberWithProfile) => {
+                queryClient.setQueryData([queryKey], (oldData: any) => {
+                    if (
+                        !oldData ||
+                        !oldData.pages ||
+                        oldData.pages.length === 0
+                    ) {
+                        return {
+                            pages: [
+                                {
+                                    items: [message],
+                                },
+                            ],
+                        };
+                    }
+
+                    const newData = [...oldData.pages];
+
+                    newData[0] = {
+                        ...newData[0],
+                        items: [message, ...newData[0].items],
+                    };
+
+                    return {
+                        ...oldData,
+                        pages: newData,
+                    };
+                });
+            });
+        }
 
         return () => {
             socket.off(addKey);
