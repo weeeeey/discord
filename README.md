@@ -44,13 +44,13 @@ You can also engage in private conversations with other users through our direct
 Here's a list of key technologies and libraries that power our Discord Clone project:
 
 Next.js: A React framework for building server-rendered applications.<br/>
-Prisma: A database toolkit and ORM for Node.js.
-Clerk: A library for authentication and user management.
-Zustand: A state management library.
-Socket.io: A real-time communication library.
-Livekit: For video and audio communication.
-Tailwind CSS: A utility-first CSS framework for styling.
-TypeScript: A statically typed superset of JavaScript.
+Prisma: A database toolkit and ORM for Node.js. <br/>
+Clerk: A library for authentication and user management. <br/>
+Zustand: A state management library. <br/>
+Socket.io: A real-time communication library. <br/>
+Livekit: For video and audio communication. <br/>
+Tailwind CSS: A utility-first CSS framework for styling. <br/>
+TypeScript: A statically typed superset of JavaScript. <br/>
 And many more dependencies for various functionalities.
 
 ### Deployment
