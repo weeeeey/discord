@@ -43,7 +43,7 @@ You can also engage in private conversations with other users through our direct
 
 Here's a list of key technologies and libraries that power our Discord Clone project:
 
-Next.js: A React framework for building server-rendered applications.
+Next.js: A React framework for building server-rendered applications.<br/>
 Prisma: A database toolkit and ORM for Node.js.
 Clerk: A library for authentication and user management.
 Zustand: A state management library.
