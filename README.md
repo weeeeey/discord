@@ -1,9 +1,9 @@
 # Discord Clone Project
 
-![GitHub repo size](https://img.shields.io/github/repo-size/yourusername/discord-clone)
-![GitHub contributors](https://img.shields.io/github/contributors/yourusername/discord-clone)
-![GitHub stars](https://img.shields.io/github/stars/yourusername/discord-clone?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/discord-clone?style=social)
+![GitHub repo size](https://img.shields.io/github/repo-size/weeeeey/discord-clone)
+![GitHub contributors](https://img.shields.io/github/contributors/weeeeey/discord-clone)
+![GitHub stars](https://img.shields.io/github/stars/weeeeey/discord-clone?style=social)
+![GitHub forks](https://img.shields.io/github/forks/weeeeey/discord-clone?style=social)
 
 ## Getting Started
 
