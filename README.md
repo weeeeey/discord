@@ -39,7 +39,7 @@ Livekit integration enables video chat functionality, making it possible for use
 
 You can also engage in private conversations with other users through our direct messaging feature. Send messages and connect with friends privately.
 
-### Technologies Used
+## Technologies Used
 
 Here's a list of key technologies and libraries that power our Discord Clone project:
 
@@ -53,6 +53,6 @@ Tailwind CSS: A utility-first CSS framework for styling. <br/>
 TypeScript: A statically typed superset of JavaScript. <br/>
 And many more dependencies for various functionalities.
 
-### Deployment
+## Deployment
 
 Our project is deployed on Railway, and you can access it at https://wiscord.up.railway.app/.
