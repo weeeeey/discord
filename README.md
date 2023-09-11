@@ -1,5 +1,9 @@
 # Discord Clone Project
 
+## Video
+
+[![Video Label](http://img.youtube.com/vi/1HJu1lRHPGk/0.jpg)](https://youtu.be/1HJu1lRHPGk)
+
 ## Getting Started
 
 First, run the development server:
