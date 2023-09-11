@@ -4,6 +4,29 @@
 
 [![Video Label](http://img.youtube.com/vi/1HJu1lRHPGk/0.jpg)](https://youtu.be/1HJu1lRHPGk)
 
+
+## Set env
+```
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+DATABASE_URL= 
+
+UPLOADTHING_SECRET=
+UPLOADTHING_APP_ID=
+
+LIVEKIT_API_KEY= 
+LIVEKIT_API_SECRET=
+NEXT_PUBLIC_LIVEKIT_URL=
+
+
+```
+
 ## Getting Started
 
 First, run the development server:
