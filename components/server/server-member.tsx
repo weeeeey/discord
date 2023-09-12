@@ -15,7 +15,6 @@ import { cn } from '@/lib/utils';
 import TooltipProvider from '../providers/tooltip-provider';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import ProfileCard from '../profile-card';
-import { currentUser } from '@clerk/nextjs';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
@@ -77,8 +76,8 @@ const ServerMember = ({
                         <SheetDescription className="w-full relative  ">
                             {members?.map((member) => (
                                 <Popover key={member.id}>
-                                    <PopoverTrigger asChild>
-                                        <div className="flex justify-between items-center hover:bg-slate-800 rounded-lg">
+                                    <div className="flex justify-between items-center hover:bg-slate-800 rounded-lg">
+                                        <PopoverTrigger asChild>
                                             <div className="flex justify-start items-center space-x-2 rounded-lg px-2 py-1 w-full group  cursor-pointer">
                                                 <div className="w-8 h-8 relative">
                                                     <Image
@@ -100,26 +99,25 @@ const ServerMember = ({
                                                     </TooltipProvider>
                                                 )}
                                             </div>
+                                        </PopoverTrigger>
 
-                                            {isAdmin && (
-                                                <button
-                                                    onClick={() => {
-                                                        deleteMember(member.id);
-                                                    }}
-                                                >
-                                                    <Trash
-                                                        className={cn(
-                                                            'w-4 h-4 fill-slate-400 mr-2 hover:fill-slate-200',
-                                                            member.role !==
-                                                                'ADMIN'
-                                                                ? 'block'
-                                                                : 'hidden'
-                                                        )}
-                                                    />
-                                                </button>
-                                            )}
-                                        </div>
-                                    </PopoverTrigger>
+                                        {isAdmin && (
+                                            <button
+                                                onClick={() => {
+                                                    deleteMember(member.id);
+                                                }}
+                                            >
+                                                <Trash
+                                                    className={cn(
+                                                        'w-4 h-4 fill-slate-400 mr-2 hover:fill-slate-200',
+                                                        member.role !== 'ADMIN'
+                                                            ? 'block'
+                                                            : 'hidden'
+                                                    )}
+                                                />
+                                            </button>
+                                        )}
+                                    </div>
                                     <PopoverContent
                                         className="w-80 absolute sm:-top-10 sm:right-32  p-0 border-none 
                                                     -top-0 -right-0  rounded-lg shadow-lg
