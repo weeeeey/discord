@@ -1,4 +1,4 @@
-# Discord Clone Project
+# Wiscord for Chat
 
 ## Video
 
